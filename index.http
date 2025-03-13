@@ -5,3 +5,12 @@ Content-Type: application/json
     "email": "laura@gmail.com",
     "password": "pass123QWE"
 }
+
+###
+PUT http://localhost:3006/api/user/validation
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOWZiOTU3Nzc0YzZiMWVmOGY5ZTkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MTg1NjY5NywiZXhwIjoxNzQxODYzODk3fQ.UAoAQyH-t2Yd5R09xYqN11X2L9GG0hSCoRbUh1XiQcc",
+    "code": "275811"
+}

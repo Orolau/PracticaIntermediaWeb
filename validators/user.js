@@ -7,4 +7,10 @@ const validatorRegisterUser = [
     validateResults
 ];
 
-module.exports= {validatorRegisterUser};
+const validateCode = [
+    check('token').exists().withMessage("No token"),
+    check('code').exists().withMessage("No code").isLength({min: 6, max: 6}).withMessage("Invalid code"),
+    validateResults
+]
+
+module.exports= {validatorRegisterUser, validateCode};
