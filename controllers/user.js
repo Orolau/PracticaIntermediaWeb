@@ -1,6 +1,6 @@
 const { userModel } = require("../models/index.js");
 const { matchedData } = require("express-validator");
-const { encrypt } = require("../utils/handlePassword.js");
+const { encrypt, compare } = require("../utils/handlePassword.js");
 const { tokenSign, getUserFromToken } = require("../utils/handleJwt.js");
 const { handleHttpError } = require("../utils/handleError.js");
 
@@ -42,7 +42,6 @@ const verifyCode = async (req, res) =>{
                 token: req.token, 
                 user: {
                     status: modifiedUser.status,
-
                 }}
             res.send(body)
         }
@@ -54,4 +53,38 @@ const verifyCode = async (req, res) =>{
     }
 }
 
-module.exports = { createUser, verifyCode };
+const login = async (req, res) =>{
+    try{
+        req = matchedData(req)
+        const user = await userModel.findOne({email: req.email})
+        if(!user){
+            handleHttpError(res, 'USER_NOT_FOUND', 404)
+        }
+        if(user.status === 0){
+            handleHttpError(res, 'USER_NOT_VALIDATED', 401)
+        }
+        else{
+            const resultComparation = await compare(req.password, user.password)
+            if (resultComparation){
+                const body = {
+                    token: tokenSign(user),
+                    user: {
+                        email: user.email,
+                        role: user.role,
+                        _id: user._id,
+                        name: user.name
+                    }
+                }
+                res.send(body)
+            }
+            else{
+                handleHttpError(res, 'INVALID_LOGIN', 400)
+            }    
+        }
+        
+    }catch (err){
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
+
+module.exports = { createUser, verifyCode, login };
