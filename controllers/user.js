@@ -141,5 +141,13 @@ const uploadLogo = async (req, res) =>{
     }
 }
 
+const getUser = async (req, res) =>{
+    try{
+        const user = req.user;
+        res.send(user)
+    }catch(err){
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
 
-module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo };
+module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser };
