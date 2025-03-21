@@ -3,6 +3,7 @@ const { matchedData, header } = require("express-validator");
 const { encrypt, compare } = require("../utils/handlePassword.js");
 const { tokenSign, getUserFromToken } = require("../utils/handleJwt.js");
 const { handleHttpError } = require("../utils/handleError.js");
+const { uploadToPinata } = require("../utils/handleUploadIPFS.js");
 
 
 const createUser = async (req, res) => {
@@ -122,5 +123,23 @@ const addCompanyUserData = async (req, res) =>{
     }
 }
 
+const uploadLogo = async (req, res) =>{
+    try{
+        const id = req.user._id;
 
-module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData };
+        const fileBuffer = req.file.buffer;
+        const fileName = req.file.originalname;
+        const pinataResponse = await uploadToPinata(fileBuffer, fileName);
+        const ipfsFile = pinataResponse.IpfsHash;
+        const ipfs = `https://${process.env.PINATA_GATEWAY}/ipfs/${ipfsFile}`;
+
+        const user = await userModel.findOneAndUpdate({_id: id}, {url:ipfs}, { new: true, select: '-password' })
+        
+        res.send(user)
+    }catch(err){
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
+
+
+module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo };

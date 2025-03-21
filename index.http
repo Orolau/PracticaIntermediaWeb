@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA",
-    "code": "613536"
+    "code": "500490"
 }
 
 ###
@@ -27,23 +27,23 @@ Content-Type: application/json
 ###
 PUT http://localhost:3006/api/user/register
 Content-Type: application/json
-authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkNzViNTBiM2NhZWM3YzZlNThjNzYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU2OTA2NSwiZXhwIjoxNzQyNTc2MjY1fQ.0PkngeOh2eqUUztaNy_9dUQzP1Cc71Ie7WvinGdLPWo
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA
 
 {
-    "email": "alv_lau@gmail.com",
+    "email": "u-tad@gmail.com",
     "name" : "laura",
-    "surnames" : "alvarez",
-    "nif": "123456789H"
+    "surnames" : "alvarez perez",
+    "nif": "785421693J"
 }
 
 ###
 PATCH http://localhost:3006/api/user/company
 Content-Type: application/json
-authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkNzViNTBiM2NhZWM3YzZlNThjNzYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU2OTA2NSwiZXhwIjoxNzQyNTc2MjY1fQ.0PkngeOh2eqUUztaNy_9dUQzP1Cc71Ie7WvinGdLPWo
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA
 
 {
     "company":{
-        "cif":"741852963L",
+        "cif":"741412963L",
         "name": "u-tad",
         "street": "las rozas",
         "province": "madrid",
@@ -52,3 +52,16 @@ authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkNzViNTBiM2Nh
         "city": "madrid"
     }
 }
+
+###
+
+PATCH http://localhost:3006/api/user/logo
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA
+Content-Type: multipart/form-data; boundary=boundary123
+
+--boundary123
+Content-Disposition: form-data; name="image"; filename="bici.jpg"
+Content-Type: image/jpeg
+
+< ./bici.jpg
+--boundary123--

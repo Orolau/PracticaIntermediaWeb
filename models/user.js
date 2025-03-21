@@ -42,6 +42,9 @@ const UserScheme = new mongoose.Schema(
             postal:{type: Number},
             city:{type: String},
             province:{type: String},
+        },
+        url: {
+            type: String
         }
     },
     {
