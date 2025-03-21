@@ -24,6 +24,24 @@ const UserScheme = new mongoose.Schema(
             enum: [0,1],
             type: Number,
             default: 0
+        },
+        name:{
+            type: String
+        },
+        surnames:{
+            type: String
+        },
+        nif:{
+            type: String
+        },
+        company:{
+            name:{type: String},
+            cif:{type: String, unique: true},
+            street:{type: String},
+            number:{type: Number},
+            postal:{type: Number},
+            city:{type: String},
+            province:{type: String},
         }
     },
     {

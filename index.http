@@ -2,7 +2,7 @@ POST http://localhost:3006/api/user/register
 Content-Type: application/json
 
 {
-    "email": "laura@gmail.com",
+    "email": "u-tad@gmail.com",
     "password": "pass123QWE"
 }
 
@@ -11,8 +11,8 @@ PUT http://localhost:3006/api/user/validation
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOWZiOTU3Nzc0YzZiMWVmOGY5ZTkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MTg1NjY5NywiZXhwIjoxNzQxODYzODk3fQ.UAoAQyH-t2Yd5R09xYqN11X2L9GG0hSCoRbUh1XiQcc",
-    "code": "275811"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA",
+    "code": "613536"
 }
 
 ###
@@ -20,6 +20,35 @@ POST http://localhost:3006/api/user/login
 Content-Type: application/json
 
 {
-    "email": "laura@gmail.com",
+    "email": "alv_lau@gmail.com",
     "password": "pass123QWE"
+}
+
+###
+PUT http://localhost:3006/api/user/register
+Content-Type: application/json
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkNzViNTBiM2NhZWM3YzZlNThjNzYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU2OTA2NSwiZXhwIjoxNzQyNTc2MjY1fQ.0PkngeOh2eqUUztaNy_9dUQzP1Cc71Ie7WvinGdLPWo
+
+{
+    "email": "alv_lau@gmail.com",
+    "name" : "laura",
+    "surnames" : "alvarez",
+    "nif": "123456789H"
+}
+
+###
+PATCH http://localhost:3006/api/user/company
+Content-Type: application/json
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkNzViNTBiM2NhZWM3YzZlNThjNzYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU2OTA2NSwiZXhwIjoxNzQyNTc2MjY1fQ.0PkngeOh2eqUUztaNy_9dUQzP1Cc71Ie7WvinGdLPWo
+
+{
+    "company":{
+        "cif":"741852963L",
+        "name": "u-tad",
+        "street": "las rozas",
+        "province": "madrid",
+        "number": 3,
+        "postal": 12345,
+        "city": "madrid"
+    }
 }

@@ -1,5 +1,5 @@
 const { userModel } = require("../models/index.js");
-const { matchedData } = require("express-validator");
+const { matchedData, header } = require("express-validator");
 const { encrypt, compare } = require("../utils/handlePassword.js");
 const { tokenSign, getUserFromToken } = require("../utils/handleJwt.js");
 const { handleHttpError } = require("../utils/handleError.js");
@@ -21,7 +21,6 @@ const createUser = async (req, res) => {
 
         res.send(data)
     } catch (err) {
-        console.log(err.code)
         if(err.code === 11000)
             handleHttpError(res, 'USER_EXISTS', 409)
         else
@@ -60,7 +59,7 @@ const login = async (req, res) =>{
         if(!user){
             handleHttpError(res, 'USER_NOT_FOUND', 404)
         }
-        if(user.status === 0){
+        else if(user.status === 0){
             handleHttpError(res, 'USER_NOT_VALIDATED', 401)
         }
         else{
@@ -87,4 +86,41 @@ const login = async (req, res) =>{
     }
 }
 
-module.exports = { createUser, verifyCode, login };
+const addPersonalUserData = async (req, res) =>{
+    try{
+        const id = req.user._id;
+        req = matchedData(req)
+        const user = await userModel.findOneAndUpdate({_id: id}, req, { new: true, select: '-password' })
+        if(!user){
+            handleHttpError(res, 'USER_NOT_FOUND', 404)
+        }
+        else{
+            res.send(user)
+        }
+
+    }catch (err){
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
+
+const addCompanyUserData = async (req, res) =>{
+    try{
+        const id = req.user._id;
+        req = matchedData(req)
+        const user = await userModel.findOneAndUpdate({_id: id}, req, { new: true, select: '-password' })
+        if(!user){
+            handleHttpError(res, 'USER_NOT_FOUND', 404)
+        }
+        else{
+            res.send(user)
+        }
+    }catch (err){
+        if(err.code === 11000)
+            handleHttpError(res, 'COMPANY_EXISTS', 409)
+        else
+            handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
+
+
+module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData };
