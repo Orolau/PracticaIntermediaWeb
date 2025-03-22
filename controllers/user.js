@@ -153,8 +153,7 @@ const getUser = async (req, res) =>{
 const deleteUser = async (req, res) =>{
     try{
         const { soft } = req.query
-        console.log(soft)
-        const user = req.user;
+        const user = req.user
         if (!user) {
             return handleHttpError(res, 'USER_NOT_FOUND', 404);
         }
@@ -171,4 +170,35 @@ const deleteUser = async (req, res) =>{
     }
 }
 
-module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser };
+const createGuestUser = async (req, res) =>{
+    try {
+        const user = req.user
+        req = matchedData(req)
+        //const password = await encrypt(req.password)
+        //const code = Math.floor(100000 + Math.random() *900000).toString()
+        const body = { ...req, company:user.company, role:'guest', status:0, veryficationAtemps:3}
+        const dataUser = await userModel.create(body)
+        
+        const data = {
+            token: tokenSign(dataUser),
+            user:{
+                email: dataUser.email,
+                status: dataUser.status,
+                role: dataUser.role,
+                _id: dataUser._id
+            }
+        }
+
+        res.send(data)
+    } catch (err) {
+        console.log(err)
+        if(err.code === 11000)
+            handleHttpError(res, 'USER_EXISTS', 409)
+        else
+            handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+
+}
+
+
+module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser };

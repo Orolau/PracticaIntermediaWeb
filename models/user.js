@@ -18,7 +18,7 @@ const UserScheme = new mongoose.Schema(
             type: String
         },
         role:{
-            enum: ["user", "admin"],
+            enum: ["user", "admin", "guest"],
             type: String,
             default: "user"
         },
@@ -38,7 +38,7 @@ const UserScheme = new mongoose.Schema(
         },
         company:{
             name:{type: String},
-            cif:{type: String, unique: true},
+            cif:{type: String},
             street:{type: String},
             number:{type: Number},
             postal:{type: Number},
