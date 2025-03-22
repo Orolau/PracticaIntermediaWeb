@@ -86,3 +86,30 @@ authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlYTBhYWVmZGJi
     "name" : "maría",
     "surnames" : "perez"
 }
+
+
+###
+POST http://localhost:3006/api/user/recover
+Content-Type: application/json
+
+{
+    "email":"lau@gmail.com"
+}
+
+###
+POST http://localhost:3006/api/user/validation
+Content-Type: application/json
+
+{
+    "email":"lau@gmail.com",
+    "code":"422654"
+}
+
+###
+PATCH http://localhost:3006/api/user/password
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlYTBhYWVmZGJiMjUzYWM4YzZmNGQiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjY1NzQyOCwiZXhwIjoxNzQyNjY0NjI4fQ.wetjpkBtcacTYymtmt48QZ8YEk5lBcK01wolAL4bgAM
+Content-Type: application/json
+
+{
+    "password":"edfT5DD12"
+}
