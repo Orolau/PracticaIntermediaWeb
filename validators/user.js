@@ -43,6 +43,22 @@ const guestValidator = [
     check("name").optional().isString().withMessage("Name must be a string"),
     check("surnames").optional().isString().withMessage("Surnames must be a string"),
     validateResults
+];
+
+const validatorRecoverToken = [
+    check("email").exists().withMessage("No email").isEmail().withMessage("No valid email"),
+    validateResults
+];
+const validatorCodeToChangePassword =[
+    check("email").exists().withMessage("No email").isEmail().withMessage("No valid email"),
+    check('code').exists().withMessage("No code").isLength({min: 6, max: 6}).withMessage("Invalid code"),
+    validateResults
 ]
 
-module.exports= {validatorRegisterUser, guestValidator, validateCode, validatorLogin, validatorPersonalData, validatorCompanyData};
+const validatorPassword =[
+    check("password").exists().withMessage("No password").isLength({min:8}).withMessage("Password must be 8 characters at least"),
+    validateResults
+]
+
+module.exports= {validatorRegisterUser, validatorRecoverToken, guestValidator, validateCode, validatorLogin,
+     validatorPersonalData, validatorCompanyData, validatorCodeToChangePassword, validatorPassword};

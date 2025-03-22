@@ -191,7 +191,6 @@ const createGuestUser = async (req, res) =>{
 
         res.send(data)
     } catch (err) {
-        console.log(err)
         if(err.code === 11000)
             handleHttpError(res, 'USER_EXISTS', 409)
         else
@@ -200,5 +199,71 @@ const createGuestUser = async (req, res) =>{
 
 }
 
+const recoverToken = async (req, res) =>{
+    try{
+        req = matchedData(req)
+        const code = Math.floor(100000 + Math.random() *900000).toString()
+        const user = await userModel.findOneAndUpdate({email: req.email}, {code: code}, { new: true})
+        const body ={
+            user:{
+                email: user.email,
+                //code: code,
+                status: user.status,
+                role: user.role,
+                _id: user._id
+            }
+        }
+        res.send(body)
+    }catch (err){
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
 
-module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser };
+const validationToRecoverPassword = async (req, res) =>{
+    try{
+        req = matchedData(req)
+        const user = await userModel.findOne({email:req.email})
+       
+        if(!user)
+            handleHttpError(res, 'USER_NOT_FOUND', 404)
+        else if(user.code !== req.code)
+            handleHttpError(res, 'ERROR_MAIL_CODE', 401)
+        else{
+            const data = {
+                token: tokenSign(user),
+                user: {
+                    email: user.email,
+                    status: user.status,
+                    role: user.role,
+                    _id: user._id
+                }
+            }
+            res.send(data)
+        }
+
+    }catch (err){
+        console.log(err)
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
+
+const changePassword = async (req, res) =>{
+    try{
+        const user = req.user
+        req = matchedData(req)
+        const password = await encrypt(req.password)
+        if (!user)
+            handleHttpError(res, 'USER_NOT_FOUND', 404)
+        else{
+            await userModel.findByIdAndUpdate(user._id, {password: password})
+            res.status(200).send({message: "Password changed succesfully"})
+        }
+        
+    }catch(err){
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
+
+
+module.exports = { createUser, recoverToken, validationToRecoverPassword, verifyCode, login, addPersonalUserData,
+     addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser, changePassword };

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser } = require("../controllers/user.js");
-const {validatorRegisterUser, guestValidator, validateCode, validatorLogin, validatorPersonalData, validatorCompanyData} = require("../validators/user.js");
+const { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser, recoverToken, validationToRecoverPassword, changePassword } = require("../controllers/user.js");
+const {validatorRegisterUser, guestValidator, validateCode, validatorLogin,validatorPassword, validatorPersonalData, validatorCompanyData, validatorRecoverToken, validatorCodeToChangePassword} = require("../validators/user.js");
 const authMiddleware = require("../middleware/session.js");
 const { uploadMiddlewareMemory } = require("../utils/handleStorage.js");
 const checkUniqueCIF = require("../middleware/checkUniqueCif.js");
@@ -15,4 +15,8 @@ router.patch('/logo', authMiddleware, uploadMiddlewareMemory.single("image"), up
 router.get('/', authMiddleware, getUser);
 router.delete('/', authMiddleware, deleteUser);
 router.post('/invite', authMiddleware, guestValidator, createGuestUser);
+router.post('/recover', validatorRecoverToken, recoverToken);
+router.post('/validation', validatorCodeToChangePassword, validationToRecoverPassword);
+router.patch('/password', authMiddleware, validatorPassword, changePassword);
+
 module.exports = router; 
