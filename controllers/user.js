@@ -150,4 +150,25 @@ const getUser = async (req, res) =>{
     }
 }
 
-module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser };
+const deleteUser = async (req, res) =>{
+    try{
+        const { soft } = req.query
+        console.log(soft)
+        const user = req.user;
+        if (!user) {
+            return handleHttpError(res, 'USER_NOT_FOUND', 404);
+        }
+        if(soft === 'true'){
+            await userModel.delete({_id: user._id})
+            res.status(200).send({message: 'User soft deleted succesfully'})
+        } 
+        else{
+            await userModel.deleteOne({_id: user._id})
+            res.status(200).send({message: 'User hard deleted succesfully'})
+        }
+    }catch (err){
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+    }
+}
+
+module.exports = { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser };

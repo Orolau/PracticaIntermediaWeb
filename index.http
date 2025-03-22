@@ -2,7 +2,7 @@ POST http://localhost:3006/api/user/register
 Content-Type: application/json
 
 {
-    "email": "u-tad@gmail.com",
+    "email": "lau@gmail.com",
     "password": "pass123QWE"
 }
 
@@ -11,8 +11,8 @@ PUT http://localhost:3006/api/user/validation
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA",
-    "code": "500490"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlOTY5OTE5ODA0OTFmYzQzMzk3OTQiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjY0MDc5MywiZXhwIjoxNzQyNjQ3OTkzfQ.jyHcyG2cZu5OEIwzqh1ETQETaKTD4EyKtC_KFgm_yu0",
+    "code": "977249"
 }
 
 ###
@@ -27,7 +27,7 @@ Content-Type: application/json
 ###
 PUT http://localhost:3006/api/user/register
 Content-Type: application/json
-authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlOTRkZWNhMjMwYTdhYjdjY2MwZDQiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjY0MDM1MCwiZXhwIjoxNzQyNjQ3NTUwfQ.-Q9d9VqGLc4Bc-i-DmDxZblF2c3LAPdOKMqTqfZIVxE
 
 {
     "email": "u-tad@gmail.com",
@@ -39,7 +39,7 @@ authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNk
 ###
 PATCH http://localhost:3006/api/user/company
 Content-Type: application/json
-authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkODIxNTQyMWNkMTYzYTA5Y2RiZmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjU3MDAwNSwiZXhwIjoxNzQyNTc3MjA1fQ.dknjOAVKEHM6dMPBmXua9usXmZkjkMkON6LQYQLJapA
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlOTRkZWNhMjMwYTdhYjdjY2MwZDQiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjY0MDM1MCwiZXhwIjoxNzQyNjQ3NTUwfQ.-Q9d9VqGLc4Bc-i-DmDxZblF2c3LAPdOKMqTqfZIVxE
 
 {
     "company":{
@@ -65,3 +65,12 @@ Content-Type: image/jpeg
 
 < ./bici.jpg
 --boundary123--
+
+
+###
+GET http://localhost:3006/api/user
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkNzViNTBiM2NhZWM3YzZlNThjNzYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjYzODY3OCwiZXhwIjoxNzQyNjQ1ODc4fQ.TFM8on-Iv-d168qa1lpENMmJNh3_HYdKWgtbvrYwBZw
+
+###
+DELETE http://localhost:3006/api/user?soft=false
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlOTY5OTE5ODA0OTFmYzQzMzk3OTQiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjY0MDc5MywiZXhwIjoxNzQyNjQ3OTkzfQ.jyHcyG2cZu5OEIwzqh1ETQETaKTD4EyKtC_KFgm_yu0

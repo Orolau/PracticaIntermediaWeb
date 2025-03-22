@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser } = require("../controllers/user.js");
+const { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser } = require("../controllers/user.js");
 const {validatorRegisterUser, validateCode, validatorLogin, validatorPersonalData, validatorCompanyData} = require("../validators/user.js");
 const authMiddleware = require("../middleware/session.js");
 const { uploadMiddlewareMemory } = require("../utils/handleStorage.js");
@@ -12,4 +12,5 @@ router.put('/register', authMiddleware, validatorPersonalData, addPersonalUserDa
 router.patch('/company', authMiddleware, validatorCompanyData, addCompanyUserData);
 router.patch('/logo', authMiddleware, uploadMiddlewareMemory.single("image"), uploadLogo);
 router.get('/', authMiddleware, getUser);
+router.delete('/', authMiddleware, deleteUser);
 module.exports = router; 
