@@ -7,7 +7,7 @@ const { uploadMiddlewareMemory } = require("../utils/handleStorage.js");
 const checkUniqueCIF = require("../middleware/checkUniqueCif.js");
 
 router.post('/register', validatorRegisterUser, createUser);
-router.put('/validation', validateCode, verifyCode);
+router.put('/validation', authMiddleware, validateCode, verifyCode);
 router.post('/login', validatorLogin, login );
 router.put('/register', authMiddleware, validatorPersonalData, addPersonalUserData);
 router.patch('/company', authMiddleware, checkUniqueCIF, validatorCompanyData, addCompanyUserData);

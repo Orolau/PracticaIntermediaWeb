@@ -32,14 +32,13 @@ const createUser = async (req, res) => {
 
 const verifyCode = async (req, res) =>{
     try{
+        const token = req.headers.authoritation
+        const user = req.user
         req = matchedData(req)
-        const code = await req.code;
-        const id = getUserFromToken(req.token);
-        const user = await userModel.findById(id);
-        if (code === user.code){
-            const modifiedUser = await userModel.findByIdAndUpdate(id, {status: 1}, {new:true});
+        if (req.code === user.code){
+            const modifiedUser = await userModel.findByIdAndUpdate(user.id, {status: 1}, {new:true});
             const body = {
-                token: req.token, 
+                token: token, 
                 user: {
                     status: modifiedUser.status,
                 }}
@@ -49,6 +48,7 @@ const verifyCode = async (req, res) =>{
             handleHttpError(res, 'ERROR_MAIL_CODE', 400)
         }
     }catch (err){
+        console.log(err)
         handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
     }
 }
@@ -175,8 +175,8 @@ const createGuestUser = async (req, res) =>{
         const user = req.user
         req = matchedData(req)
         //const password = await encrypt(req.password)
-        //const code = Math.floor(100000 + Math.random() *900000).toString()
-        const body = { ...req, company:user.company, role:'guest', status:0, veryficationAtemps:3}
+        const code = Math.floor(100000 + Math.random() *900000).toString()
+        const body = { ...req, company:user.company, code, role:'guest', status:0, veryficationAtemps:3}
         const dataUser = await userModel.create(body)
         
         const data = {
