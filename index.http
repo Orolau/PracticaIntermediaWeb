@@ -30,7 +30,7 @@ Content-Type: application/json
 authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlYTJkY2U5MTVjMzZjYjM2ODIxZjYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0Mjk4ODYxNywiZXhwIjoxNzQyOTk1ODE3fQ.TEcxIoVXT-O1KwmJRXJRbsl1lpcZkDTCcjZoDx9vbj8
 
 {
-    "email": "lau@gmail.com",
+    "email": "admin@gmail.com",
     "name" : "laura",
     "surnames" : "alvarez perez",
     "nif": "785421693K"
