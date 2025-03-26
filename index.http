@@ -20,20 +20,20 @@ POST http://localhost:3006/api/user/login
 Content-Type: application/json
 
 {
-    "email": "alv_lau@gmail.com",
+    "email": "admin@gmail.com",
     "password": "pass123QWE"
 }
 
 ###
-PUT http://localhost:3006/api/user/register
+PATCH http://localhost:3006/api/user/register
 Content-Type: application/json
-authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlYTI4NjZkMzJhZWYxYmM3YzM4MGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjY0Mzg0NiwiZXhwIjoxNzQyNjUxMDQ2fQ.JhdKwFL1Qni6OvtIT2t2kvjkKb6tbox-y1xDBkYuJEI
+authoritation: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RlYTJkY2U5MTVjMzZjYjM2ODIxZjYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0Mjk4ODYxNywiZXhwIjoxNzQyOTk1ODE3fQ.TEcxIoVXT-O1KwmJRXJRbsl1lpcZkDTCcjZoDx9vbj8
 
 {
     "email": "lau@gmail.com",
     "name" : "laura",
     "surnames" : "alvarez perez",
-    "nif": "785421693J"
+    "nif": "785421693K"
 }
 
 ###
