@@ -28,13 +28,16 @@ const UserScheme = new mongoose.Schema(
             default: 0
         },
         name:{
-            type: String
+            type: String,
+            default: ""
         },
         surnames:{
-            type: String
+            type: String,
+            default: ""
         },
         nif:{
-            type: String
+            type: String,
+            default: ""
         },
         company:{
             name:{type: String},

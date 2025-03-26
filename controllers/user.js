@@ -60,12 +60,16 @@ const login = async (req, res) =>{
         if(!user){
             handleHttpError(res, 'USER_NOT_FOUND', 404)
         }
+        else if(user.veryficationAtemps<=0){
+            handleHttpError(res, 'NO_ATEMPS_LEFT', 402)
+        }
         else if(user.status === 0){
             handleHttpError(res, 'USER_NOT_VALIDATED', 401)
         }
         else{
             const resultComparation = await compare(req.password, user.password)
             if (resultComparation){
+                await userModel.findOneAndUpdate({_id: user._id}, {veryficationAtemps: 3})
                 const body = {
                     token: tokenSign(user),
                     user: {
@@ -78,11 +82,13 @@ const login = async (req, res) =>{
                 res.send(body)
             }
             else{
+                await userModel.findOneAndUpdate({_id: user._id}, {veryficationAtemps: user.veryficationAtemps-1})
                 handleHttpError(res, 'INVALID_LOGIN', 400)
             }    
         }
         
     }catch (err){
+        console.log(err)
         handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
     }
 }
