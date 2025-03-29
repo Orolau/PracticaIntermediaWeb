@@ -5,12 +5,12 @@ const { tokenSign, getUserFromToken } = require("../utils/handleJwt.js");
 const { handleHttpError } = require("../utils/handleError.js");
 const { uploadToPinata } = require("../utils/handleUploadIPFS.js");
 
-
+// Crea un nuevo usuario, encripta la contraseña y genera un código de verificación
 const createUser = async (req, res) => {
     try {
         req = matchedData(req)
         const password = await encrypt(req.password)
-        const code = Math.floor(100000 + Math.random() *900000).toString()
+        const code = Math.floor(100000 + Math.random() *900000).toString()//genera un código de 6 dígitos
         const body = { ...req, password, code, status:0, veryficationAtemps:3}
         const dataUser = await userModel.create(body)
         
@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
     }
 
 }
-
+// Verifica el código enviado por el usuario comparándolo con el almacenado en la bbdd para activar la cuenta
 const verifyCode = async (req, res) =>{
     try{
         const token = req.headers.authoritation
@@ -52,7 +52,7 @@ const verifyCode = async (req, res) =>{
         handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
     }
 }
-
+// Inicia sesión verificando las credenciales y genera un token
 const login = async (req, res) =>{
     try{
         req = matchedData(req)
@@ -92,7 +92,7 @@ const login = async (req, res) =>{
         handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
     }
 }
-
+// Añade información personal (nombre, apellidos y nif) al usuario autenticado
 const addPersonalUserData = async (req, res) =>{
     try{
         const id = req.user._id;
@@ -110,6 +110,7 @@ const addPersonalUserData = async (req, res) =>{
     }
 }
 
+// Añade información de la empresa asociada al usuario. si el usuario es autonomo, la compañía toma los datos del usuario
 const addCompanyUserData = async (req, res) => {
     try {
         const id = req.user._id;
@@ -145,7 +146,7 @@ const addCompanyUserData = async (req, res) => {
     }
 };
 
-
+// Añade una dirección al usuario
 const addAddressUserData = async (req, res) =>{
     try{
         const id = req.user._id;
@@ -162,6 +163,7 @@ const addAddressUserData = async (req, res) =>{
     }
 }
 
+//Subida a la nube del logo proporcionado y actualización del campo url del usuario autenticado
 const uploadLogo = async (req, res) =>{
     try{
         const id = req.user._id;
@@ -180,6 +182,7 @@ const uploadLogo = async (req, res) =>{
     }
 }
 
+//Devuelve el usuario autenticado con el token
 const getUser = async (req, res) =>{
     try{
         const user = req.user;
@@ -189,6 +192,7 @@ const getUser = async (req, res) =>{
     }
 }
 
+//Elimina el usuario al que se le corresponde el token pasado (hard: borrado completo; soft: borrado lógico, sigue en la base de datos pero con la cuenta deshabilitada)
 const deleteUser = async (req, res) =>{
     try{
         const { soft } = req.query
@@ -209,6 +213,7 @@ const deleteUser = async (req, res) =>{
     }
 }
 
+//Crea un nuevo usuario con el rol guest y al que se le asigna la misma compañía del usuario autenticado
 const createGuestUser = async (req, res) =>{
     try {
         const user = req.user
@@ -238,6 +243,8 @@ const createGuestUser = async (req, res) =>{
 
 }
 
+/*Recuperación de la contraseña*/
+// 1. Recuperar el token, por lo que se envía el usuario introduce el email y se envía a este un nuevo código de verificación
 const recoverToken = async (req, res) =>{
     try{
         req = matchedData(req)
@@ -258,6 +265,7 @@ const recoverToken = async (req, res) =>{
     }
 }
 
+// 2. Validación del nuevo código enviado, entonces se devuelve el token
 const validationToRecoverPassword = async (req, res) =>{
     try{
         req = matchedData(req)
@@ -285,7 +293,7 @@ const validationToRecoverPassword = async (req, res) =>{
         handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
     }
 }
-
+// 3. Cambio de la contraseña del usuario, proporcionando un token válido
 const changePassword = async (req, res) =>{
     try{
         const user = req.user
