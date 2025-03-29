@@ -110,7 +110,43 @@ const addPersonalUserData = async (req, res) =>{
     }
 }
 
-const addCompanyUserData = async (req, res) =>{
+const addCompanyUserData = async (req, res) => {
+    try {
+        const id = req.user._id;
+        const userOld = req.user;
+        const autonomo = req.query.autonomo === 'true';
+        req = matchedData(req);
+
+        
+        if (autonomo) {
+            req.company = req.company || {};
+            req.company.name = userOld.name;
+            req.company.cif = userOld.nif;
+            req.company.street = userOld.address?.street;
+            req.company.number = userOld.address?.number;
+            req.company.city = userOld.address?.city;
+            req.company.postal = userOld.address?.postal;
+            req.company.province = userOld.address?.province;
+        }
+
+        const user = await userModel.findOneAndUpdate({ _id: id }, req, { new: true, select: '-password' });
+
+        if (!user) {
+            handleHttpError(res, 'USER_NOT_FOUND', 404);
+        } else {
+            res.send(user);
+        }
+    } catch (err) {
+        if (err.code === 11000) {
+            handleHttpError(res, 'COMPANY_EXISTS', 409);
+        } else {
+            handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500);
+        }
+    }
+};
+
+
+const addAddressUserData = async (req, res) =>{
     try{
         const id = req.user._id;
         req = matchedData(req)
@@ -122,10 +158,7 @@ const addCompanyUserData = async (req, res) =>{
             res.send(user)
         }
     }catch (err){
-        if(err.code === 11000)
-            handleHttpError(res, 'COMPANY_EXISTS', 409)
-        else
-            handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
+        handleHttpError(res, 'INTERNAL_SERVER_ERROR', 500)
     }
 }
 
@@ -180,9 +213,9 @@ const createGuestUser = async (req, res) =>{
     try {
         const user = req.user
         req = matchedData(req)
-        //const password = await encrypt(req.password)
+        const password = await encrypt(req.password)
         const code = Math.floor(100000 + Math.random() *900000).toString()
-        const body = { ...req, company:user.company, code, role:'guest', status:0, veryficationAtemps:3}
+        const body = { ...req, company:user.company, password, code, role:'guest', status:0, veryficationAtemps:3}
         const dataUser = await userModel.create(body)
         
         const data = {
@@ -272,4 +305,4 @@ const changePassword = async (req, res) =>{
 
 
 module.exports = { createUser, recoverToken, validationToRecoverPassword, verifyCode, login, addPersonalUserData,
-     addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser, changePassword };
+     addCompanyUserData, addAddressUserData, uploadLogo, getUser, deleteUser, createGuestUser, changePassword };

@@ -38,10 +38,21 @@ const validatorCompanyData = [
     validateResults
 ]
 
+const validatorAdressData = [
+    check("address").exists().withMessage("No adrress"),
+    check("address.street").optional().isString().withMessage("Street must be a string"),
+    check("address.province").optional().isString().withMessage("Province must be a string"),
+    check("address.city").optional().isString().withMessage("City must be a string"),
+    check("address.number").optional().isInt().withMessage("Number must be a integer"),
+    check("address.postal").optional().isInt().withMessage("Postal must be a integer"),
+    validateResults
+]
+
 const guestValidator = [
     check("email").exists().withMessage("No email").isEmail().withMessage("No valid email"),
     check("name").optional().isString().withMessage("Name must be a string"),
     check("surnames").optional().isString().withMessage("Surnames must be a string"),
+    check("password").exists().withMessage("No password").isLength({min:8}).withMessage("Password must be 8 characters at least"),
     validateResults
 ];
 
@@ -61,4 +72,4 @@ const validatorPassword =[
 ]
 
 module.exports= {validatorRegisterUser, validatorRecoverToken, guestValidator, validateCode, validatorLogin,
-     validatorPersonalData, validatorCompanyData, validatorCodeToChangePassword, validatorPassword};
+     validatorPersonalData, validatorAdressData, validatorCompanyData, validatorCodeToChangePassword, validatorPassword};

@@ -50,6 +50,13 @@ const UserScheme = new mongoose.Schema(
         },
         url: {
             type: String
+        },
+        address:{
+            street: {type: String},
+            number: {type: Number},
+            city: {type: String},
+            postal: {type: Number},
+            province: {type: String},
         }
     },
     {

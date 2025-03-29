@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser, recoverToken, validationToRecoverPassword, changePassword } = require("../controllers/user.js");
-const {validatorRegisterUser, guestValidator, validateCode, validatorLogin,validatorPassword, validatorPersonalData, validatorCompanyData, validatorRecoverToken, validatorCodeToChangePassword} = require("../validators/user.js");
+const { createUser, verifyCode, login, addPersonalUserData, addCompanyUserData, uploadLogo, getUser, deleteUser, createGuestUser, recoverToken, validationToRecoverPassword, changePassword, addAddressUserData } = require("../controllers/user.js");
+const {validatorRegisterUser, guestValidator, validateCode, validatorLogin,validatorPassword, validatorPersonalData, validatorCompanyData, validatorRecoverToken, validatorCodeToChangePassword, validatorAdressData} = require("../validators/user.js");
 const authMiddleware = require("../middleware/session.js");
 const { uploadMiddlewareMemory } = require("../utils/handleStorage.js");
 const checkUniqueCIF = require("../middleware/checkUniqueCif.js");
@@ -11,6 +11,7 @@ router.put('/validation', authMiddleware, validateCode, verifyCode);
 router.post('/login', validatorLogin, login );
 router.patch('/register', authMiddleware, validatorPersonalData, addPersonalUserData);
 router.patch('/company', authMiddleware, checkUniqueCIF, validatorCompanyData, addCompanyUserData);
+router.patch('/address', authMiddleware, validatorAdressData, addAddressUserData);
 router.patch('/logo', authMiddleware, uploadMiddlewareMemory.single("image"), uploadLogo);
 router.get('/', authMiddleware, getUser);
 router.delete('/', authMiddleware, deleteUser);
